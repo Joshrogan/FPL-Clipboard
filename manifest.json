@@ -8,7 +8,9 @@
     "<all_urls>",
     "webRequest",
     "webRequestBlocking",
-    "storage"
+    "storage",
+    "clipboardRead",
+    "clipboardWrite"
   ],
 
   "background": {

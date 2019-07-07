@@ -24,46 +24,56 @@ function printName(playerIds) {
         }
         
         const set1 = new Set();
+        var playersFormat = []
 
         for(var i = 0; i < playerPosition.length; i++) {
             if(playerPosition[i] == 1) {
                 if(set1.has(playerPosition[i])) {
-                    console.log("BENCH: " + playerNames[i] + ", " +  playerNames[i+1] + ", " + playerNames[i+2] + ", " +  playerNames[i + 3])
+                    playersFormat.push("\n\nBENCH: " + playerNames[i] + ", " +  playerNames[i+1] + ", " + playerNames[i+2] + ", " +  playerNames[i + 3])
                     break
                 } else {
                     set1.add(playerPosition[i])
-                    console.log("GK " + playerNames[i]);
+                    playersFormat.push("GK " + playerNames[i]);
                 } 
             }
             if(playerPosition[i] == 2) {
                 if(set1.has(playerPosition[i])) {
-                    console.log("DEF " + playerNames[i]);
+                    playersFormat.push(playerNames[i] + " ");
                 } else {
-                    console.log("----");
-                    console.log("DEF " + playerNames[i]);
+                    playersFormat.push("\n\nDEF " + playerNames[i] + " ");
                     set1.add(playerPosition[i]);
                 }
             }
             if(playerPosition[i] == 3) {
                 if(set1.has(playerPosition[i])) {
-                    console.log("MID " + playerNames[i]);
+                    playersFormat.push(playerNames[i] + " ");
                 } else {
-                    console.log("----"); 
-                    console.log("MID " + playerNames[i]);
+                    playersFormat.push("\n\nMID " + playerNames[i] + " ");
                     set1.add(playerPosition[i]);
                 }
             }
             if(playerPosition[i] == 4) {
                 if(set1.has(playerPosition[i])) {
-                    console.log("FWD " + playerNames[i]);
+                    playersFormat.push(playerNames[i] + " ");
                 } else {
-                    console.log("----");
-                    console.log("FWD " + playerNames[i]);
+                    playersFormat.push("\n\nFWD " + playerNames[i] + " ");
                     set1.add(playerPosition[i]);
                 }
             }
         }
+        playersClip = playersFormat.join('');
+        updateClipboard(playersClip)
     });}
+
+function updateClipboard(newClip) {
+  navigator.clipboard.writeText(newClip).then(function() {
+    /* clipboard successfully set */
+      console.log("successful added to clipboard");
+  }, function() {
+    /* clipboard write failed */
+      console.log("failed");
+  });
+}
 
 fetch('https://fantasy.premierleague.com/api/my-team/232297/')
   .then(function(response) {
