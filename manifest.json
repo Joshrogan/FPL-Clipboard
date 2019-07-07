@@ -1,26 +1,22 @@
 {
-  "description": "Demonstrating webRequests",
+  "description": "fpl copy team to clipboard",
   "manifest_version": 2,
-  "name": "webRequest-demo",
+  "name": "FPL Team Copy",
   "version": "1.0",
   "icons": {
-      "48": "icons/bookmark-it.png"
+      "48": "icons/clipboard.png"
   },
 
   "permissions": [
-    "<all_urls>",
+    "*://*.premierleague.com/*",
     "webRequest",
-    "webRequestBlocking",
-    "storage",
     "clipboardRead",
-    "clipboardWrite",
-    "bookmarks",
-    "tabs"
+    "clipboardWrite"
   ],
 
   "browser_action": {
-      "default_icon": "icons/bookmark-it.png",
-      "default_title": "fpl text"
+      "default_icon": "icons/clipboard.png",
+      "default_title": "Copy your FPL team"
   },
 
   "background": {
