@@ -1,3 +1,6 @@
+function copyTeam() {
+
+console.log(teamID);
 function printName(playerIds) {
     console.log("printName");
     console.log(playerIds);
@@ -74,8 +77,7 @@ function updateClipboard(newClip) {
       console.log("failed");
   });
 }
-
-fetch('https://fantasy.premierleague.com/api/my-team/232297/')
+fetch("https://fantasy.premierleague.com/api/my-team/" + teamID + "/")
   .then(function(response) {
     return response.json();
   })
@@ -90,4 +92,27 @@ fetch('https://fantasy.premierleague.com/api/my-team/232297/')
     }
     printName(playerIds);
   });
+}
+
+
+browser.webRequest.onBeforeRequest.addListener(
+  logURL,
+  {urls: ["*://*.premierleague.com/*"]}
+);
+
+
+
+function logURL(requestDetails) {
+    if (requestDetails.url.startsWith("https://fantasy.premierleague.com/api/my-team/") ) {
+        console.log("Loading: " + requestDetails.url);
+        code = requestDetails.url.split('https://fantasy.premierleague.com/api/my-team/').pop()
+        code = code.replace("/", "");
+        codeInt = parseInt(code, 10);
+        console.log(code);
+        console.log(codeInt);
+        teamID = codeInt;
+    }
+    browser.browserAction.onClicked.addListener(copyTeam);
+}
+
 
