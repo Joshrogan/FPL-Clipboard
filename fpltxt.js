@@ -1,5 +1,4 @@
 function copyTeam() {
-
     fetch("https://fantasy.premierleague.com/api/my-team/" + teamID + "/")
     .then(function(response) {
         return response.json();
@@ -72,33 +71,41 @@ function copyTeam() {
             }
         }
         playersClip = playersFormat.join('');
-        updateClipboard(playersClip)
+        console.log(playersClip);
+        copytext(playersClip)
     });}
 
-    function updateClipboard(newClip) {
-        navigator.clipboard.writeText(newClip).then(function() {
-        console.log("successfully added ID: " + teamID);
-    }, function() {
-        /* clipboard write failed */
-        console.log("failed to add teamID to clipboard");
-        });
-    } 
+     
 }
 
 //starts here listening for you to navigate to fpl site
-browser.webRequest.onBeforeRequest.addListener(
+chrome.webRequest.onBeforeRequest.addListener(
     logURL,
     {urls: ["*://*.premierleague.com/*"]}
 );
 
 function logURL(requestDetails) {
+    console.log(requestDetails)
     if (requestDetails.url.startsWith("https://fantasy.premierleague.com/api/my-team/") ) {
         console.log("Loading: " + requestDetails.url);
         code = requestDetails.url.split('https://fantasy.premierleague.com/api/my-team/').pop()
         code = code.replace("/", "");
         codeInt = parseInt(code, 10);
         teamID = codeInt;
+        console.log(teamID);
     }
     //copys team when icon clicked
-    browser.browserAction.onClicked.addListener(copyTeam);
+    text = chrome.browserAction.onClicked.addListener(copyTeam);
+    copytext(text);
 }
+
+function copytext(text) {
+   var input = document.createElement('textarea');
+        document.body.appendChild(input);
+        input.value = text;
+        input.focus();
+        input.select();
+        document.execCommand('Copy');
+        input.remove();
+}
+
